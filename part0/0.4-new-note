@@ -1,0 +1,17 @@
+title Posting a form's data (traditional way)
+
+Browser->Server: HTTP POST https://studies.cs.helsinki.fi/exampleapp/new_note
+Server-->Browser: HTTP 302 Accept
+Browser->Server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/notes
+Server-->Browser: HTTP 200 <HTML-Code>
+Browser->Server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/main.css
+Server-->Browser: HTTP 200 <CSS-Code>
+Browser->Server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/main.js
+Server-->Browser: HTTP 200 <JS-Code>
+note over Browser: starts to execute JS Code which lead to subsequent requests
+Browser->Server: https://studies.cs.helsinki.fi/exampleapp/data.json
+Server-->Browser: HTTP 200 [{"content":"asd","date":"2022-03-24T11:17:23.114Z"},.... ]
+note right of Browser
+My Browser made another request
+for favicon.ico :) 
+end note

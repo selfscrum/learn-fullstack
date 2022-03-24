@@ -1,0 +1,8 @@
+title Posting a form's data (SPA way)
+note over Browser: 
+JS Code deals with taking in 
+the form submission 
+and updating the DOM tree
+end note
+Browser->Server: HTTP POST https://studies.cs.helsinki.fi/exampleapp/new_note_spa
+Server-->Browser: HTTP 201 "note created"

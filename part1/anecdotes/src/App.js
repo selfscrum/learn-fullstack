@@ -2,10 +2,10 @@ import { useState } from 'react'
 
 const Button = ({handler, label}) => <button onClick={handler}>{label}</button>
 const Anecdote = ({text, vote}) => (
-<>
-<div>{text}</div>
-<div>has {vote} votes</div>
-</>
+    <>
+      <div>{text}</div>
+      <div>has {vote} votes</div>
+    </>
 )
 
 const App = () => {
@@ -21,19 +21,24 @@ const App = () => {
 
   const [votes, setVote] = useState(Array(anecdotes.length).fill(0))
   const [selected, setSelected] = useState(0)
+  const [winner, setWinner] = useState(0)
 
   const newAnecdote = () => setSelected ( Math.trunc(Math.random()*10000) % anecdotes.length)
   const vote = () => {
     const newvotes = [...votes]
     newvotes[selected] += 1 
     setVote(newvotes)
+    setWinner(newvotes.indexOf(Math.max.apply(null, newvotes)))
   }
-
+  
   return (
     <div>
+      <h1>Anecdote of the day</h1>
       <Anecdote text= {anecdotes[selected]} vote={votes[selected]} />
       <Button handler={() => vote()} label='Vote' /> 
       <Button handler={() => newAnecdote()} label='Show new anecdote' /> 
+      <h1>Anecdote with the most votes</h1>
+      <Anecdote text= {anecdotes[winner]} vote={votes[winner]} />
     </div>
   )
 }

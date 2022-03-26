@@ -5,7 +5,7 @@ import { useState } from 'react'
 const Button = ({handler, label}) => <button onClick={handler()}>{label}</button>
 
 // Line in the Statistics Block
-const StatisticsLine = ({value, text}) => <div>{text} {value}</div>
+const StatisticsLine = ({value, text}) => <tr><td>{text}</td><td> {value}</td></tr>
 
 // Create the statistics block
 const Statistics = ({good, neutral, bad}) => {
@@ -14,14 +14,14 @@ const Statistics = ({good, neutral, bad}) => {
     <div>No feedback given</div> 
     )
   else return (
-    <>
+    <table><tbody>
       <StatisticsLine text='good' value={good} />
       <StatisticsLine text='neutral' value={neutral} />
       <StatisticsLine text='bad' value={bad} />
       <StatisticsLine text='all' value={good+neutral+bad}  />
       <StatisticsLine text='average' value={(good-bad)/(good+neutral+bad)} />
       <StatisticsLine text='positive' value={`${good / (good + neutral + bad) * 100} %`} />
-    </>
+    </tbody></table>
     )
 }
 

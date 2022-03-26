@@ -3,6 +3,9 @@ import { useState } from 'react'
 
 const Button = ({handler, label}) => <button onClick={handler()}>{label}</button>
 const Counter = ({value, label}) => <div>{label} {value}</div>
+const Total = ({value}) => <div>all {value}</div>
+const Average = ({value}) => <div>average {value}</div>
+const Positive = ({value}) => <div>positive {value} %</div>
 
 const App = () => {
   // save clicks of each button to its own state
@@ -24,6 +27,9 @@ const App = () => {
       <Counter value={good} label='good' />
       <Counter value={neutral} label='neutral' />
       <Counter value={bad} label='bad' />
+      <Total value= {good+neutral+bad} />
+      <Average value={(good-bad)/(good+neutral+bad)} />
+      <Positive value= {good / (good+neutral+bad)*100} />
     </div>
   )
 }

@@ -1,8 +1,12 @@
 import { useState } from 'react'
 import Person from './components/Person'
+
 const App = () => {
   const [persons, setPersons] = useState([]) 
   const [newName, setNewName] = useState('')
+
+  // findIndex callback
+  const isEqualName = (person) => person.name === newName
 
   // OnSubmit handler
   const addPerson = (event) => {
@@ -10,14 +14,18 @@ const App = () => {
         name: newName
       }
       event.preventDefault()
-      console.log('addPerson clicked')
-      setPersons(persons.concat(newPerson))
-      setNewName('')
+
+      if(persons.findIndex(isEqualName) !== -1)
+          window.alert(`"${newName}" is already registered`)
+      else
+        {      
+        setPersons(persons.concat(newPerson))
+        setNewName('')
+        }
   }
 
   // OnChange handler
   const changePersonInput = (event) => {
-    console.log(event.target.value)
     setNewName(event.target.value)
   }
 

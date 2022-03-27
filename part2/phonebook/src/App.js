@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import axios from 'axios'
 import Person from './components/Person'
 import Persons from './components/Persons'
 import Filter from './components/Filter'
@@ -9,6 +10,16 @@ const App = () => {
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [newSearch, setNewSearch] = useState('')
+
+// set the data fetch effect
+useEffect(() => 
+  axios
+    .get("http://localhost:3001/persons")
+    .then((persons) => {
+        console.log(persons)
+        setPersons(persons.data)
+    })
+,[])
 
   // findIndex Person Equal callback
   const isEqualName = (person) => person.name === newName

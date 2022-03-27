@@ -45,7 +45,7 @@ const App = () => {
 
   const filteredPersons = newSearch === ''
     ? persons
-    : persons.filter(person => person.name.includes(newSearch))
+    : persons.filter(person => person.name.toUpperCase().includes(newSearch.toUpperCase()))
 
   return (
     <div>
@@ -69,7 +69,7 @@ const App = () => {
           <button type="submit">add</button>
         </div>
       </form>
-      
+
       <h2>Numbers</h2>
         {filteredPersons.map (p => <Person key={p.name} person = {p}/> )}
     </div>

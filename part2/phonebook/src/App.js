@@ -5,8 +5,9 @@ const App = () => {
   const [persons, setPersons] = useState([]) 
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
+  const [newSearch, setNewSearch] = useState('')
 
-  // findIndex callback
+  // findIndex Person Equal callback
   const isEqualName = (person) => person.name === newName
 
   // OnSubmit handler
@@ -37,9 +38,26 @@ const App = () => {
     setNewNumber(event.target.value)
   }
 
+  // OnChange handler
+  const changeSearchInput = (event) => {
+    setNewSearch(event.target.value)
+  }
+
+  const filteredPersons = newSearch === ''
+    ? persons
+    : persons.filter(person => person.name.includes(newSearch))
+
   return (
     <div>
       <h2>Phonebook</h2>
+
+      <form>
+        <div>
+          filter shown with <input value={newSearch}  onChange= {changeSearchInput}/>
+        </div>
+        <h2>add a new</h2>
+      </form>
+
       <form onSubmit={addPerson}>
         <div>
           name: <input value={newName} onChange = {changePersonInput}/>
@@ -51,8 +69,9 @@ const App = () => {
           <button type="submit">add</button>
         </div>
       </form>
+      
       <h2>Numbers</h2>
-        {persons.map (p => <Person key={p.name} person = {p}/> )}
+        {filteredPersons.map (p => <Person key={p.name} person = {p}/> )}
     </div>
   )
 }

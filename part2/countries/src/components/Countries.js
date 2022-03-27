@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Countries = ({countries}) => { 
+const Countries = ({countries, showHandler}) => { 
     if (countries.length > 10)
         return <div>Too many matches, specify another filter.</div>
     else if (countries.length === 1)
@@ -17,10 +17,12 @@ const Countries = ({countries}) => {
             </>
         )
     else
-        return countries.map(country => <Country key={country.cca2} country={country} /> )
+        return countries.map(country => <Country key={country.cca2} country={country} button={showHandler}/> )
 }
 
 const Language = ({ lang }) => <li>{lang}</li>
-const Country = ({ country }) => <p>{country.name.common}</p>
+const Country = ({ country, button }) => (
+    <p>{country.name.common} <button id={country.name.common} onClick={button}>show</button></p>
+)
 
 export default Countries

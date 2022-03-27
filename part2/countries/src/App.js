@@ -9,6 +9,10 @@ const App = () => {
   const [countries, setCountries] = useState([])
   const [searchString, setSearchString] = useState('')
 
+  const showHandler = (event) => {
+    setSearchString(event.target.id)
+  }
+
   const changeHandler = (event) => {
     setSearchString(event.target.value)
   }
@@ -27,7 +31,7 @@ const App = () => {
   return (
     <>
       <SearchCountry search={searchString} changeHandler={changeHandler} />
-      <Countries countries={countries} />
+      <Countries countries={countries} showHandler={showHandler}/>
     </>
   )
 }

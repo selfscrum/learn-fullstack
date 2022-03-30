@@ -33,20 +33,38 @@ useEffect(() =>
       event.preventDefault()
 
       if(persons.findIndex(isEqualName) !== -1)
-          window.alert(`"${newName}" is already registered`)
+      // person.name already exists
+        {
+        const changePerson = persons.find(n => n.name === newPerson.name)
+        if(window.confirm(`"${newName}" is already registered, replace the number?`))
+          {
+          personService
+            .update(changePerson.id, newPerson)
+            .then(returnedPerson =>
+              {
+              setPersons(persons.map(person => person.id !== changePerson.id ? person : returnedPerson))
+              setNewName('')
+              setNewNumber('')
+            })
+          }
+        }
       else
         {      
         personService
           .create(newPerson)
           .then(returnedPerson =>
             {
-            setPersons(persons.concat(newPerson))
+            console.log ('add', returnedPerson)
+            setPersons(persons.concat(returnedPerson))
+            console.log('set nach add', persons)
             setNewName('')
             setNewNumber('')
           })
         }
   }
 
+  // delete the selected person after confirmation
+  //
   const removePerson = (id) => {    
     console.log('removePerson', id)
     const person = persons.find(n => n.id === id)

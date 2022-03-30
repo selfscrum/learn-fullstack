@@ -4,6 +4,7 @@ import Person from './components/Person'
 import Persons from './components/Persons'
 import Filter from './components/Filter'
 import AddPerson from './components/AddPerson'
+import personService from './services/persons'
 
 const App = () => {
   const [persons, setPersons] = useState([]) 
@@ -13,11 +14,10 @@ const App = () => {
 
 // set the data fetch effect
 useEffect(() => 
-  axios
-    .get("http://localhost:3001/persons")
-    .then((persons) => {
-        console.log(persons)
-        setPersons(persons.data)
+  personService
+    .getAll()
+    .then((allPersons) => {
+        setPersons(allPersons)
     })
 ,[])
 
@@ -36,10 +36,27 @@ useEffect(() =>
           window.alert(`"${newName}" is already registered`)
       else
         {      
-        setPersons(persons.concat(newPerson))
-        setNewName('')
-        setNewNumber('')
+        personService
+          .create(newPerson)
+          .then(returnedPerson =>
+            {
+            setPersons(persons.concat(newPerson))
+            setNewName('')
+            setNewNumber('')
+          })
         }
+  }
+
+  const removePerson = (id) => {    
+    console.log('removePerson', id)
+    const person = persons.find(n => n.id === id)
+    if (window.confirm(`Do you really want to delete ${person.name}?`)) {
+      personService
+      .remove(id)
+      .then(() => {
+        setPersons(persons.filter(person => person.id !== id))
+      })
+    }
   }
 
   // OnChange handler
@@ -79,7 +96,7 @@ useEffect(() =>
       />
 
       <h2>Numbers</h2>
-      <Persons persons={filteredPersons} />
+      <Persons persons={filteredPersons} remove={removePerson} />
     </div>
   )
 }

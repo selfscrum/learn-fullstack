@@ -4,13 +4,17 @@ import Person from './components/Person'
 import Persons from './components/Persons'
 import Filter from './components/Filter'
 import AddPerson from './components/AddPerson'
+import Notification from './components/Notification'
 import personService from './services/persons'
+import './index.css'
 
 const App = () => {
   const [persons, setPersons] = useState([]) 
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [newSearch, setNewSearch] = useState('')
+  const [message, setMessage] = useState(null)
+  const [errMessage, setErrMessage] = useState(null)
 
 // set the data fetch effect
 useEffect(() => 
@@ -56,10 +60,14 @@ useEffect(() =>
             {
             console.log ('add', returnedPerson)
             setPersons(persons.concat(returnedPerson))
-            console.log('set nach add', persons)
+            console.log('set nach add', returnedPerson)
             setNewName('')
             setNewNumber('')
-          })
+            setMessage(`Adding ${returnedPerson.name} was successful.`)
+            setTimeout(() => {
+              setMessage(null)        
+            }, 5000)
+        })
         }
   }
 
@@ -99,6 +107,8 @@ useEffect(() =>
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification message={errMessage} message_class='error'/>
+      <Notification message={message} message_class='success'/>
       <Filter 
           newsearch={newSearch} 
           changeSearchInput={changeSearchInput}

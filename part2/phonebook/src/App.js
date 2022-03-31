@@ -50,6 +50,13 @@ useEffect(() =>
               setNewName('')
               setNewNumber('')
             })
+            .catch(error => {
+              setErrMessage(`Person '${newPerson.name}' was already removed from server`)
+              setTimeout(() => {
+                setErrMessage(null)        
+              }, 5000)
+              setPersons(persons.filter(person => person.id !== changePerson.id))    
+            })
           }
         }
       else

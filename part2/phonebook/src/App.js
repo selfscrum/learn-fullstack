@@ -1,6 +1,4 @@
-import { useState, useEffect } from 'react'
-import axios from 'axios'
-import Person from './components/Person'
+import React, { useState, useEffect } from 'react'
 import Persons from './components/Persons'
 import Filter from './components/Filter'
 import AddPerson from './components/AddPerson'
@@ -51,7 +49,8 @@ useEffect(() =>
               setNewNumber('')
             })
             .catch(error => {
-              setErrMessage(`Person '${newPerson.name}' was already removed from server`)
+              setErrMessage(error.response.data.error)
+              //              setErrMessage(`Person '${newPerson.name}' was already removed from server`)
               setTimeout(() => {
                 setErrMessage(null)        
               }, 5000)
@@ -74,7 +73,14 @@ useEffect(() =>
             setTimeout(() => {
               setMessage(null)        
             }, 5000)
-        })
+          })
+          .catch(error => {
+            console.log(error)
+            setErrMessage(error.response.data.error)
+            setTimeout(() => {
+              setErrMessage(null)        
+            }, 5000)
+          })
         }
   }
 

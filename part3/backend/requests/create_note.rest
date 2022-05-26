@@ -1,0 +1,47 @@
+POST http://localhost:3001/api/notes
+Content-Type: application/json
+
+{
+    "content": "hello",
+    "important": false
+}
+
+### empty body
+
+POST http://localhost:3001/api/notes
+Content-Type: application/json
+
+{
+}
+
+### no content
+
+POST http://localhost:3001/api/notes
+Content-Type: application/json
+
+{
+    "important": false
+}
+
+### additional unknown attribute
+
+POST http://localhost:3001/api/notes
+Content-Type: application/json
+
+{
+    "content": "hello",
+    "important": false,
+    "restful": "funny"
+}
+
+### duplicate attribute
+
+POST http://localhost:3001/api/notes
+Content-Type: application/json
+
+{
+    "content": "hello",
+    "content": "world",
+    "important": false
+}
+
